@@ -21,10 +21,10 @@ func main() {
 
 	for {
 		time.Sleep(1 * time.Millisecond)
-		if inputpin.Read() == rpio.High {
+		if inputpin.Read() == 1 {
 			fmt.Println("High")
 			outputpin.High()
-		} else if inputpin.Read() == rpio.Low {
+		} else if inputpin.Read() == 0 {
 			fmt.Println("Low")
 			outputpin.Low()
 		}
