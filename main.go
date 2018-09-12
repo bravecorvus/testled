@@ -13,7 +13,8 @@ func main() {
 		fmt.Println("failed to rpio.Open()")
 		fmt.Println(err.Error())
 	}
-	pin := rpio.Pin(13)
+	pin := rpio.Pin(17)
+	pin.Output()
 	for {
 		time.Sleep(1 * time.Second)
 		pin.Toggle()
