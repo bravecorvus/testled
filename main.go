@@ -1,28 +1,21 @@
 package main
 
 import (
+	"fmt"
 	"time"
 
-	"gobot.io/x/gobot"
-	"gobot.io/x/gobot/drivers/gpio"
-	"gobot.io/x/gobot/platforms/raspi"
+	rpio "github.com/stianeikeland/go-rpio"
 )
 
 func main() {
-	r := raspi.NewAdaptor()
-	led := gpio.NewLedDriver(r, "17")
-
-	work := func() {
-		gobot.Every(1*time.Second, func() {
-			led.Toggle()
-		})
+	err := rpio.Open()
+	if err != nil {
+		fmt.Println("failed to rpio.Open()")
+		fmt.Println(err.Error())
 	}
-
-	robot := gobot.NewRobot("blinkBot",
-		[]gobot.Connection{r},
-		[]gobot.Device{led},
-		work,
-	)
-
-	robot.Start()
+	pin := rpio.Pin(17)
+	for {
+		time.Sleep(1 * time.Second)
+		pin.Toggle()
+	}
 }
