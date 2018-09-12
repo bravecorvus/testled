@@ -50,7 +50,10 @@ func main() {
 	for i := 0; i < 2; {
 		if inputpin.EdgeDetected() { // check if event occured
 			fmt.Println("Motion detected")
+			outputpin.High()
 			i++
+		} else {
+			outputpin.Low()
 		}
 		time.Sleep(time.Second / 2)
 	}
