@@ -25,7 +25,6 @@ func main() {
 			fmt.Println("High")
 			outputpin.High()
 		} else if inputpin.Read() == 0 {
-			fmt.Println("Low")
 			outputpin.Low()
 		}
 	}
