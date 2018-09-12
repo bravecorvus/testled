@@ -13,8 +13,8 @@ func main() {
 		fmt.Println("failed to rpio.Open()")
 		fmt.Println(err.Error())
 	}
-	inputpin := rpio.Pin(17)
-	outputpin := rpio.Pin(27)
+	inputpin := rpio.Pin(27)
+	outputpin := rpio.Pin(17)
 
 	inputpin.Input()
 	outputpin.Output()
