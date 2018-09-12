@@ -13,10 +13,18 @@ func main() {
 		fmt.Println("failed to rpio.Open()")
 		fmt.Println(err.Error())
 	}
-	pin := rpio.Pin(17)
-	pin.Output()
+	inputpin := rpio.Pin(17)
+	outputpin := rpio.Pin(27)
+
+	inputpin.Input()
+	outputpin.Output()
+
 	for {
-		time.Sleep(1 * time.Second)
-		pin.Toggle()
+		time.Sleep(1 * time.Millisecond)
+		if inputpin.Read() == rpio.High {
+			outputpin.High()
+		} else if inputpin.Read() == rpio.Low {
+			outputpin.Low()
+		}
 	}
 }
