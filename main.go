@@ -20,7 +20,7 @@ func main() {
 	outputpin.Output()
 
 	for {
-		time.Sleep(1 * time.Millisecond)
+		time.Sleep(1 * time.Second)
 		if inputpin.Read() == rpio.High {
 			fmt.Println("High")
 			outputpin.High()
