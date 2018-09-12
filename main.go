@@ -11,7 +11,7 @@ func main() {
 
 	r := raspi.NewAdaptor()
 
-	led := gpio.NewLedDriver(r, "17")
+	led := gpio.NewLedDriver(r, "13")
 	led.Start()
 
 	for {
