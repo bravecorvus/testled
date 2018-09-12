@@ -1,28 +1,22 @@
 package main
 
-import "fmt"
+import (
+	"time"
 
-// func main() {
-//
-// r := raspi.NewAdaptor()
-// led := gpio.NewLedDriver(r, "17")
-//
-// work := func() {
-// gobot.Every(1*time.Second, func() {
-// led.Toggle()
-// })
-// }
-//
-// robot := gobot.NewRobot("blinkBot",
-// []gobot.Connection{r},
-// []gobot.Device{led},
-// work,
-// )
-//
-// robot.Start()
-//
-// }
+	"gobot.io/x/gobot/drivers/gpio"
+	"gobot.io/x/gobot/platforms/raspi"
+)
 
 func main() {
-	fmt.Println("Hello World")
+
+	r := raspi.NewAdaptor()
+
+	led := gpio.NewLedDriver(r, "17")
+	led.Start()
+
+	for {
+		led.Toggle()
+		time.Sleep(1000 * time.Millisecond)
+	}
+
 }
