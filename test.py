@@ -1,10 +1,9 @@
-from gpiozero import LED
-from time import sleep
+from gpiozero import MotionSensor
+import RPi.GPIO as GPIO
 
-led = LED(17)
+pir = MotionSensor(27)
 
 while True:
-  led.on()
-  sleep(1)
-  led.off()
-  sleep(1)
+	pir.wait_for_motion()
+	print("You moved")
+	pir.wait_for_no_motion()
