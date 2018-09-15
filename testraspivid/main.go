@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func raspivid(output string, endsignal chan int) {
+func record(output string, endsignal chan int) {
 	raspivid := exec.Command("raspivid", "-o", output+".h264", "-t", "1000000000")
 	starterr := raspivid.Start()
 	if starterr != nil {
@@ -31,7 +31,7 @@ func raspivid(output string, endsignal chan int) {
 
 func main() {
 	x := make(chan int)
-	raspivid("video2.h264", x)
+	go record("video2.h264", x)
 
 	time.Sleep(10)
 	x <- 1
