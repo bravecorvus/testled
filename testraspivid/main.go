@@ -12,6 +12,7 @@ var (
 )
 
 func startRecord(command *exec.Cmd) {
+	fmt.Println("startRecord")
 	starterr := command.Start()
 	if starterr != nil {
 		fmt.Println("Can't start raspivid")
@@ -20,6 +21,7 @@ func startRecord(command *exec.Cmd) {
 }
 
 func stopRecord(command *exec.Cmd) {
+	fmt.Println("stopRecord")
 	killerr := command.Process.Kill()
 	if killerr != nil {
 		fmt.Println("Can't kill raspivid")
