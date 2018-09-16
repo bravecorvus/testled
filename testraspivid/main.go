@@ -7,10 +7,6 @@ import (
 	"time"
 )
 
-var (
-	raspivid *exec.Cmd
-)
-
 func startRecord(command *exec.Cmd, output string) {
 	starterr := command.Start()
 	if starterr != nil {
@@ -29,7 +25,7 @@ func stopRecord(command *exec.Cmd) {
 }
 
 func main() {
-	raspivid = exec.Command("raspivid", "-o", os.Args[1]+".h264", "-t", "1000000000")
+	raspivid := exec.Command("raspivid", "-o", os.Args[1]+".h264", "-t", "1000000000")
 	startRecord(raspivid, "video2.h264")
 	time.Sleep(10)
 	stopRecord(raspivid)
