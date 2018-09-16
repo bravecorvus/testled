@@ -2,26 +2,27 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"os/exec"
 	"time"
 )
 
-func main() {
-	fmt.Println(os.Args[1])
-	var raspivid = exec.Command("raspivid", "-o", os.Args[1]+".h264", "-t", "1000000000")
+var (
+	record exec.Cmd
+)
 
-	starterr := raspivid.Start()
+func init() {
+	record = *exec.Command("raspivid", "-o", "video.h264", "-t", "1000000000")
+}
+func main() {
+	starterr := record.Start()
 	if starterr != nil {
 		fmt.Println("Can't start raspivid")
 		fmt.Println(starterr.Error())
 	}
-
-	time.Sleep(10)
-
-	killerr := raspivid.Process.Kill()
+	time.Sleep(10 * time.Second)
+	killerr := record.Process.Kill()
 	if killerr != nil {
 		fmt.Println("Can't kill raspivid")
-		fmt.Println(killerr)
+		fmt.Println(killerr.Error())
 	}
 }
