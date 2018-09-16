@@ -32,6 +32,7 @@ func init() {
 }
 
 func main() {
+	fmt.Println(os.Args[1])
 	raspivid = exec.Command("raspivid", "-o", os.Args[1]+".h264", "-t", "1000000000")
 	startRecord(*raspivid, "video2.h264")
 	time.Sleep(10)
