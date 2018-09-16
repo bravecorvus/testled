@@ -2,38 +2,35 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"os/exec"
 	"time"
 )
 
-func record(output string, endsignal chan int) {
-	raspivid := exec.Command("raspivid", "-o", output+".h264", "-t", "1000000000")
-	starterr := raspivid.Start()
+var (
+	raspivid exec.Cmd
+)
+
+func startRecord(command exec.Cmd, output string) {
+	starterr := command.Start()
 	if starterr != nil {
 		fmt.Println("Can't start raspivid")
 		fmt.Println(starterr.Error())
 	}
-	_ = endsignal
-	killerr := raspivid.Process.Kill()
-	if killerr != nil {
-		fmt.Println("Can't kill raspivid")
-		fmt.Println(killerr.Error())
-	}
-
-	MP4Box := exec.Command("MP4Box", "-add", output+".h264", output+".mp4")
-	_, killerr = MP4Box.Output()
-	if killerr != nil {
-		fmt.Println("Can't kill MP$Box")
-		fmt.Println(killerr.Error())
-	}
 
 }
 
+func stopRecord(command exec.Cmd) {
+	killerr := command.Process.Kill()
+	if killerr != nil {
+		fmt.Println("Can't kill raspivid")
+		fmt.Println(killerr)
+	}
+}
+
 func main() {
-	x := make(chan int)
-	go record("video2.h264", x)
-
+	raspivid = *exec.Command("raspivid", "-o", os.Args[1]+".h264", "-t", "1000000000")
+	startRecord(raspivid, "video2.h264")
 	time.Sleep(10)
-	x <- 1
-
+	stopRecord(raspivid)
 }
