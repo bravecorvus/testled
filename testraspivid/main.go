@@ -11,16 +11,15 @@ var (
 	raspivid *exec.Cmd
 )
 
-func startRecord(command *exec.Cmd, output string) {
+func startRecord(command exec.Cmd, output string) {
 	starterr := command.Start()
 	if starterr != nil {
 		fmt.Println("Can't start raspivid")
 		fmt.Println(starterr.Error())
 	}
-
 }
 
-func stopRecord(command *exec.Cmd) {
+func stopRecord(command exec.Cmd) {
 	killerr := command.Process.Kill()
 	if killerr != nil {
 		fmt.Println("Can't kill raspivid")
@@ -33,8 +32,8 @@ func init() {
 }
 
 func main() {
-	startRecord(raspivid, "video2.h264")
+	startRecord(*raspivid, "video")
 	time.Sleep(10)
-	stopRecord(raspivid)
+	stopRecord(*raspivid)
 
 }
