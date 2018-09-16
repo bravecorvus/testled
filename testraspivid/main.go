@@ -11,7 +11,7 @@ var (
 	raspivid *exec.Cmd
 )
 
-func startRecord(command exec.Cmd, output string) {
+func startRecord(command exec.Cmd) {
 	starterr := command.Start()
 	if starterr != nil {
 		fmt.Println("Can't start raspivid")
@@ -27,12 +27,8 @@ func stopRecord(command exec.Cmd) {
 	}
 }
 
-func init() {
-	raspivid = exec.Command("raspivid", "-o", os.Args[1]+".h264", "-t", "1000000000")
-}
-
 func main() {
-	startRecord(*raspivid, "video")
+	raspivid = exec.Command("raspivid", "-o", os.Args[1]+".h264", "-t", "1000000000")
 	time.Sleep(10)
 	stopRecord(*raspivid)
 
