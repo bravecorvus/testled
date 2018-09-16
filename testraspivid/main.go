@@ -32,7 +32,7 @@ func stopRecord(command *exec.Cmd) {
 func main() {
 	raspivid = exec.Command("raspivid", "-o", os.Args[1]+".h264", "-t", "1000000000")
 	startRecord(raspivid)
-	time.Sleep(10)
+	time.Sleep(10 * time.Second)
 	stopRecord(raspivid)
 
 }
