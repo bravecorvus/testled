@@ -2,27 +2,39 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"os/exec"
 	"time"
 )
 
 var (
-	record exec.Cmd
+	raspivid *exec.Cmd
 )
 
-func init() {
-	record = *exec.Command("raspivid", "-o", "video.h264", "-t", "1000000000")
-}
-func main() {
-	starterr := record.Start()
+func startRecord(command *exec.Cmd, output string) {
+	starterr := command.Start()
 	if starterr != nil {
 		fmt.Println("Can't start raspivid")
 		fmt.Println(starterr.Error())
 	}
-	time.Sleep(10 * time.Second)
-	killerr := record.Process.Kill()
+
+}
+
+func stopRecord(command *exec.Cmd) {
+	killerr := command.Process.Kill()
 	if killerr != nil {
 		fmt.Println("Can't kill raspivid")
-		fmt.Println(killerr.Error())
+		fmt.Println(killerr)
 	}
+}
+
+func init() {
+	raspivid = exec.Command("raspivid", "-o", os.Args[1]+".h264", "-t", "1000000000")
+}
+
+func main() {
+	startRecord(raspivid, "video2.h264")
+	time.Sleep(10)
+	stopRecord(raspivid)
+
 }
