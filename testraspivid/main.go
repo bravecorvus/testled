@@ -2,12 +2,11 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"os/exec"
 )
 
 func main() {
-	raspivid := exec.Command("raspivid", "-o", os.Args[1]+".h264", "-t", "1000000000")
+	raspivid := exec.Command("raspivid", "-o", "video.h264", "-t", "1000000000")
 
 	starterr := raspivid.Start()
 	if starterr != nil {
